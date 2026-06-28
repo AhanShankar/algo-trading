@@ -7,14 +7,14 @@ import (
 
 func TestGenerateId_NotEmpty(t *testing.T) {
 	o := Order{
-		Instrument: Instrument{Ticker: "RELIANCE", Exchange: "NSE", Type: Equity},
-		Side:       Buy,
-		Quantity:   10,
-		Price:      Money{Amount: 250000, Currency: INR},
-		Type:       Market,
+		Instrument:  Instrument{Ticker: "RELIANCE", Exchange: "NSE", Type: Equity},
+		Side:        Buy,
+		Quantity:    10,
+		Price:       Money{Amount: 250000, Currency: INR},
+		Type:        Market,
 		ProductType: Intraday,
-		Validity:   Day,
-		State:      Pending,
+		Validity:    Day,
+		State:       Pending,
 	}
 
 	id := o.GenerateId()
@@ -25,14 +25,14 @@ func TestGenerateId_NotEmpty(t *testing.T) {
 
 func TestGenerateId_ContainsTicker(t *testing.T) {
 	o := Order{
-		Instrument: Instrument{Ticker: "INFY", Exchange: "NSE", Type: Equity},
-		Side:       Buy,
-		Quantity:   5,
-		Price:      Money{Amount: 150000, Currency: INR},
-		Type:       Limit,
+		Instrument:  Instrument{Ticker: "INFY", Exchange: "NSE", Type: Equity},
+		Side:        Buy,
+		Quantity:    5,
+		Price:       Money{Amount: 150000, Currency: INR},
+		Type:        Limit,
 		ProductType: Delivery,
-		Validity:   Day,
-		State:      Pending,
+		Validity:    Day,
+		State:       Pending,
 	}
 
 	id := o.GenerateId()
