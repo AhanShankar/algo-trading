@@ -1,4 +1,4 @@
-package types
+package trading
 
 import (
 	"strings"
@@ -17,7 +17,7 @@ func TestGenerateId_NotEmpty(t *testing.T) {
 		State:       Pending,
 	}
 
-	id := o.GenerateId()
+	id := o.GenerateID()
 	if id == "" {
 		t.Error("expected non-empty ID, got empty string")
 	}
@@ -35,7 +35,7 @@ func TestGenerateId_ContainsTicker(t *testing.T) {
 		State:       Pending,
 	}
 
-	id := o.GenerateId()
+	id := o.GenerateID()
 	if !strings.Contains(id, "INFY") {
 		t.Errorf("expected ID to contain ticker INFY, got: %s", id)
 	}
@@ -62,7 +62,7 @@ func TestGenerateId_ContainsSide(t *testing.T) {
 			State:       Pending,
 		}
 
-		id := o.GenerateId()
+		id := o.GenerateID()
 		if !strings.Contains(id, tt.expected) {
 			t.Errorf("expected ID to contain side %s, got: %s", tt.expected, id)
 		}
@@ -83,7 +83,7 @@ func TestGenerateId_Unique(t *testing.T) {
 
 	ids := make(map[string]bool)
 	for i := 0; i < 100; i++ {
-		id := o.GenerateId()
+		id := o.GenerateID()
 		if ids[id] {
 			t.Errorf("duplicate ID generated: %s", id)
 		}

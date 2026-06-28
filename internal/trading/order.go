@@ -1,10 +1,9 @@
-package types
+package trading
 
 import (
+	"math/rand/v2"
 	"strconv"
 	"time"
-
-	"github.com/AhanShankar/algo-trading/src/utils"
 )
 
 type Order struct {
@@ -55,5 +54,18 @@ const (
 
 func (o Order) GenerateID() string {
 	timestamp := time.Now()
-	return timestamp.Format(time.RFC3339) + string(o.Side) + o.Instrument.Ticker + strconv.FormatInt(o.Quantity, 10) + utils.RandomCapsString()
+	return timestamp.Format(time.RFC3339) + string(o.Side) + o.Instrument.Ticker + strconv.FormatInt(o.Quantity, 10) + randomSuffix()
+}
+
+// randomSuffix returns a 5-character A–Z string used to disambiguate IDs
+// generated within the same second. math/rand/v2's top-level functions are
+// auto-seeded and safe for concurrent use, so there is no Seed call to get
+// wrong (the previous per-call time-based seeding could collide).
+func randomSuffix() string {
+	const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	b := make([]byte, 5)
+	for i := range b {
+		b[i] = letters[rand.IntN(len(letters))]
+	}
+	return string(b)
 }

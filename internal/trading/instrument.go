@@ -1,4 +1,4 @@
-package types
+package trading
 
 type Instrument struct {
 	Ticker   string
