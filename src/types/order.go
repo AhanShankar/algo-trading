@@ -53,7 +53,7 @@ const (
 	Cancelled       OrderState = "CANCELLED"
 )
 
-func (o Order) GenerateId() string {
+func (o Order) GenerateID() string {
 	timestamp := time.Now()
 	return timestamp.Format(time.RFC3339) + string(o.Side) + o.Instrument.Ticker + strconv.FormatInt(o.Quantity, 10) + utils.RandomCapsString()
 }
