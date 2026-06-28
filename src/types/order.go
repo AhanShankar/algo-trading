@@ -8,7 +8,7 @@ import (
 )
 
 type Order struct {
-	Id          string
+	ID          string
 	Instrument  Instrument
 	Side        Side
 	Quantity    int64
