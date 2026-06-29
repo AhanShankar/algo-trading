@@ -3,6 +3,7 @@ package trading
 import (
 	"math/rand/v2"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -54,7 +55,15 @@ const (
 
 func (o Order) GenerateID() string {
 	timestamp := time.Now()
-	return timestamp.Format(time.RFC3339) + string(o.Side) + o.Instrument.Ticker + strconv.FormatInt(o.Quantity, 10) + randomSuffix()
+	id := strings.Join([]string{
+		timestamp.Format(time.RFC3339),
+		string(o.Side),
+		o.Instrument.Ticker,
+		strconv.FormatInt(o.Quantity, 10),
+		randomSuffix(),
+	}, "-")
+	o.ID = id
+	return o.ID
 }
 
 // randomSuffix returns a 5-character A–Z string used to disambiguate IDs
