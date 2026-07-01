@@ -8,13 +8,13 @@ import (
 var ErrPriceUnavailable = errors.New("portfolio: price unavailable for instrument")
 
 type Portfolio struct {
-	Cash      Money
-	Positions map[string]Position // keyed by Instrument.Key()
+	cash      Money
+	positions map[string]Position // keyed by Instrument.Key()
 }
 
 func (p Portfolio) Equity(prices map[string]Money) (Money, error) {
-	total := p.Cash
-	for key, pos := range p.Positions {
+	total := p.cash
+	for key, pos := range p.positions {
 		price, ok := prices[key]
 		if !ok {
 			return Money{}, fmt.Errorf("valuing %s: %w", key, ErrPriceUnavailable)
