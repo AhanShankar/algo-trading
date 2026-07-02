@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestGenerateId_NotEmpty(t *testing.T) {
+func TestGenerateClientID_NotEmpty(t *testing.T) {
 	o := Order{
 		Instrument:  Instrument{Ticker: "RELIANCE", Exchange: "NSE", Type: Equity},
 		Side:        Buy,
@@ -17,13 +17,13 @@ func TestGenerateId_NotEmpty(t *testing.T) {
 		State:       Pending,
 	}
 
-	id := o.GenerateID()
+	id := o.GenerateClientID()
 	if id == "" {
 		t.Error("expected non-empty ID, got empty string")
 	}
 }
 
-func TestGenerateId_ContainsTicker(t *testing.T) {
+func TestGenerateClientID_ContainsTicker(t *testing.T) {
 	o := Order{
 		Instrument:  Instrument{Ticker: "INFY", Exchange: "NSE", Type: Equity},
 		Side:        Buy,
@@ -35,13 +35,13 @@ func TestGenerateId_ContainsTicker(t *testing.T) {
 		State:       Pending,
 	}
 
-	id := o.GenerateID()
+	id := o.GenerateClientID()
 	if !strings.Contains(id, "INFY") {
 		t.Errorf("expected ID to contain ticker INFY, got: %s", id)
 	}
 }
 
-func TestGenerateId_ContainsSide(t *testing.T) {
+func TestGenerateClientID_ContainsSide(t *testing.T) {
 	tests := []struct {
 		side     Side
 		expected string
@@ -62,14 +62,14 @@ func TestGenerateId_ContainsSide(t *testing.T) {
 			State:       Pending,
 		}
 
-		id := o.GenerateID()
+		id := o.GenerateClientID()
 		if !strings.Contains(id, tt.expected) {
 			t.Errorf("expected ID to contain side %s, got: %s", tt.expected, id)
 		}
 	}
 }
 
-func TestGenerateId_Unique(t *testing.T) {
+func TestGenerateClientID_Unique(t *testing.T) {
 	o := Order{
 		Instrument:  Instrument{Ticker: "RELIANCE", Exchange: "NSE", Type: Equity},
 		Side:        Buy,
@@ -83,7 +83,7 @@ func TestGenerateId_Unique(t *testing.T) {
 
 	ids := make(map[string]bool)
 	for i := 0; i < 100; i++ {
-		id := o.GenerateID()
+		id := o.GenerateClientID()
 		if ids[id] {
 			t.Errorf("duplicate ID generated: %s", id)
 		}

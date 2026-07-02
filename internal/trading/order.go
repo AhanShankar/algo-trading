@@ -8,7 +8,8 @@ import (
 )
 
 type Order struct {
-	ID          string
+	ClientID    string
+	BrokerID    string
 	Instrument  Instrument
 	Side        Side
 	Quantity    int64
@@ -17,6 +18,17 @@ type Order struct {
 	ProductType ProductType
 	Validity    OrderValidity
 	State       OrderState
+}
+
+// OrderResult is the per-order outcome of a PlaceOrder batch. Each result
+// self-identifies by ClientID so callers correlate by identity, not by slice
+// order. Err is per-order: nil means accepted, otherwise a rejection or an
+// ambiguous timeout. Lifecycle state is not carried here — Order.State is the
+// single source of truth, updated from this result and from async fills.
+type OrderResult struct {
+	ClientID string
+	BrokerID string // broker's id when accepted; empty on rejection/timeout
+	Err      error
 }
 
 type OrderType string
@@ -53,7 +65,7 @@ const (
 	Cancelled       OrderState = "CANCELLED"
 )
 
-func (o Order) GenerateID() string {
+func (o *Order) GenerateClientID() string {
 	timestamp := time.Now()
 	id := strings.Join([]string{
 		timestamp.Format(time.RFC3339),
@@ -62,8 +74,8 @@ func (o Order) GenerateID() string {
 		strconv.FormatInt(o.Quantity, 10),
 		randomSuffix(),
 	}, "-")
-	o.ID = id
-	return o.ID
+	o.ClientID = id
+	return o.ClientID
 }
 
 // randomSuffix returns a 5-character A–Z string used to disambiguate IDs
