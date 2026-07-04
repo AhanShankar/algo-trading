@@ -8,4 +8,6 @@ type Fill struct {
 	Price        Money
 	Timestamp    time.Time
 	BrokerageFee Money
+	Instrument   Instrument
+	Side         Side
 }
