@@ -12,4 +12,5 @@ type Broker interface {
 	// this return.
 	PlaceOrder(ctx context.Context, orders []trading.Order) []trading.OrderResult
 	GetOrderStatus(ctx context.Context, order trading.Order) (trading.Order, error)
+	Fills() <-chan trading.Fill
 }
