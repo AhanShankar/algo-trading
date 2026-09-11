@@ -15,3 +15,5 @@ type Tick struct {
 	DayHigh       Money
 	DayLow        Money
 }
+
+func (t Tick) isMarketEvent() {}

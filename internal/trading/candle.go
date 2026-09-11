@@ -12,3 +12,5 @@ type Candle struct {
 	Timestamp  time.Time
 	Interval   time.Duration
 }
+
+func (c Candle) isMarketEvent() {}

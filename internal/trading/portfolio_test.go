@@ -32,8 +32,8 @@ func TestPortfolioEquity(t *testing.T) {
 	infy := Instrument{Ticker: "INFY", Exchange: "NSE", Type: Equity}
 
 	p := Portfolio{
-		Cash: Money{100000, INR}, // ₹1000.00
-		Positions: map[string]Position{
+		cash: Money{100000, INR}, // ₹1000.00
+		positions: map[string]Position{
 			reliance.Key(): {Instrument: reliance, Quantity: 10, CostBasis: Money{2500000, INR}},
 			infy.Key():     {Instrument: infy, Quantity: -5, CostBasis: Money{750000, INR}}, // short
 		},
@@ -56,8 +56,8 @@ func TestPortfolioEquity(t *testing.T) {
 func TestPortfolioEquityMissingPrice(t *testing.T) {
 	reliance := Instrument{Ticker: "RELIANCE", Exchange: "NSE", Type: Equity}
 	p := Portfolio{
-		Cash: Money{100000, INR},
-		Positions: map[string]Position{
+		cash: Money{100000, INR},
+		positions: map[string]Position{
 			reliance.Key(): {Instrument: reliance, Quantity: 10, CostBasis: Money{2500000, INR}},
 		},
 	}
@@ -69,8 +69,8 @@ func TestPortfolioEquityMissingPrice(t *testing.T) {
 func TestPortfolioEquityCurrencyMismatch(t *testing.T) {
 	reliance := Instrument{Ticker: "RELIANCE", Exchange: "NSE", Type: Equity}
 	p := Portfolio{
-		Cash: Money{100000, INR},
-		Positions: map[string]Position{
+		cash: Money{100000, INR},
+		positions: map[string]Position{
 			reliance.Key(): {Instrument: reliance, Quantity: 10, CostBasis: Money{2500000, INR}},
 		},
 	}
